@@ -2,7 +2,7 @@
   "ID": "CEA0FDFC6D3B4085823D60DA76F28844",
   "ActionKeyword": "bright",
   "Name": "Monitor Brightness",
-  "Description": "Controls the brightness of a monitor",
+  "Description": "Controls the brightness of a monitor. Use Ctrl+Windows+Arrow Up/Down to change the brightness.",
   "Author": "stefnotch",
   "Version": "1.0.0",
   "Language": "csharp",
