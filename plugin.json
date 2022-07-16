@@ -1,0 +1,12 @@
+{
+  "ID": "CEA0FDFC6D3B4085823D60DA76F28844",
+  "ActionKeyword": "bright",
+  "Name": "Monitor Brightness",
+  "Description": "Controls the brightness of a monitor",
+  "Author": "stefnotch",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/stefnotch",
+  "ExecuteFileName": "MonitorBrightness.dll",
+  "IcoPath": "Images\\app.png"
+}
