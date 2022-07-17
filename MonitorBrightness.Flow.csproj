@@ -1,19 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows10.0.22000.0</TargetFramework>
     <ProjectGuid>{03FFA443-5F50-48D5-8869-F3DF316803AA}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MonitorBrightness</RootNamespace>
     <AssemblyName>MonitorBrightness</AssemblyName>
-	<Nullable>enable</Nullable>
-	<UseWpf>true</UseWpf>
+	  <Nullable>enable</Nullable>
+    <UseWpf>true</UseWpf>
+    <UseWindowsForms>true</UseWindowsForms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +34,7 @@
 
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Plugin" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.4" />
     <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
 
