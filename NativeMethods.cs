@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace MonitorBrightness
 {
-    internal class NativeMethods
+    internal static class NativeMethods
     {
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -27,6 +27,9 @@ namespace MonitorBrightness
         [DllImport("dxva2.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetMonitorBrightness(IntPtr physicalMonitorPtr, uint newBrightness);
+
+        [DllImport("dxva2.dll", SetLastError = true)]
+        public static extern bool GetMonitorCapabilities(IntPtr physicalMonitorPtr, out uint monitorCapabilitiesFlags, out uint monitorSupportedTemperaturesFlags);
 
         // Maybe: GetMonitorContrast
         // Maybe: GetMonitorRedGreenOrBlueDrive
@@ -63,5 +66,19 @@ namespace MonitorBrightness
             MONITOR_DEFAULTTOPRIMARY = 1,
             MONITOR_DEFAULTTONEAREST = 2
         }
+        
+        public enum MonitorCapabilitiesFlags: uint
+        {
+            MC_CAPS_BRIGHTNESS = 2,
+        }
+
+        public static bool HasFlag(uint value, MonitorCapabilitiesFlags flag)
+        {
+            return (value & (uint)flag) != 0;
+        }
+
+        // https://stackoverflow.com/questions/763724/dllimport-preserversig-and-setlasterror-attributes
+        // SetLastError = true
+        // TODO: Marshal.GetLastWin32Error()
     }
 }

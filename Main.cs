@@ -68,7 +68,7 @@ namespace MonitorBrightness
                 {
                     SetBrightnessAtCursor((v) =>
                     {
-                        v.CurrentValue = (uint)Math.Clamp(targetBrightness, v.MinValue, v.MaxValue);
+                        v.Brightness.CurrentValue = (uint)Math.Clamp(targetBrightness, v.Brightness.MinValue, v.Brightness.MaxValue);
                     });
                     return true;
                 },
@@ -99,7 +99,7 @@ namespace MonitorBrightness
                 int delta = vkcode == ArrowUpVk ? 20 : -20;
                 SetBrightnessAtCursor((v) =>
                 {
-                    v.CurrentValue = (uint)Math.Clamp((int)v.CurrentValue + delta, v.MinValue, v.MaxValue);
+                    v.Brightness.CurrentValue = (uint)Math.Clamp((int)v.Brightness.CurrentValue + delta, v.Brightness.MinValue, v.Brightness.MaxValue);
                 });
 
                 // TODO: Ask if there is an API to tell if a result is still visible/gives me a callback when a result goes away
@@ -138,24 +138,27 @@ namespace MonitorBrightness
                 LogException(new Exception("Cannot get physical monitors"));
                 return null;
             }
+            if (physicalMonitors.Length == 0)
+            {
+                Context.API.LogWarn("Main.cs", "Could not find any monitors");
+            }
+
             try
             {
-                var brightnesses = Monitors.GetMonitorBrightnesses(physicalMonitors);
-                if (brightnesses.Count == 0)
-                {
-                    LogException(new Exception("Cannot get brightness"));
-                    return null;
-                }
-
-                return brightnesses;
+                return Monitors.GetMonitorBrightnesses(physicalMonitors);
             } 
+            catch(Exception e)
+            {
+                LogException(e);
+                return null;
+            }
             finally
             {
                 Monitors.Destroy(physicalMonitors);
             }
         }
 
-        private void SetBrightnessAtCursor(Action<Monitors.BrightnessInfo> callback)
+        private void SetBrightnessAtCursor(Action<Monitors.PhysicalMonitor> callback)
         {
             var monitor = Monitors.GetHMonitorAtCursor();
             if (monitor == null)
@@ -173,6 +176,10 @@ namespace MonitorBrightness
             try
             {
                 Monitors.UpdateMonitorBrightnesses(physicalMonitors, callback);
+            }
+            catch(Exception e)
+            {
+                LogException(e);
             }
             finally
             {
